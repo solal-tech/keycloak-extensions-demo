@@ -27,3 +27,18 @@ jobs:
       with:
         name: my-artifact
         path: requiredaction/target/*.jar
+
+    - name: Install AWS CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        pip3 install awscli --upgrade --user
+
+    - name: Configure AWS credentials
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_PUBLIC_BUCKET }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_PUBLIC_BUCKET }}
+
+    - name: Upload JAR to S3
+      run: |
+        aws s3 cp requiredaction/target/*.jar s3://solal-pub/
