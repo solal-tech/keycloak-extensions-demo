@@ -3,6 +3,8 @@ package dasniko.keycloak.requiredaction;
 import org.keycloak.Config;
 import org.keycloak.authentication.RequiredActionFactory;
 import org.keycloak.authentication.RequiredActionProvider;
+import org.keycloak.common.util.Resteasy;
+import org.keycloak.common.util.ResteasyProvider;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 
@@ -13,7 +15,9 @@ public class MobileNumberRequiredActionFactory implements RequiredActionFactory 
 
 	@Override
 	public RequiredActionProvider create(KeycloakSession keycloakSession) {
-		return new MobileNumberRequiredAction();
+		MobileNumberRequiredAction action = new MobileNumberRequiredAction();
+		action.setResteasyProvider(Resteasy.getProvider());
+		return action;
 	}
 
 	@Override

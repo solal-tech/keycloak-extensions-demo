@@ -1,8 +1,10 @@
 package dasniko.keycloak.requiredaction;
 
+import org.jboss.resteasy.spi.HttpRequest;
 import org.keycloak.authentication.InitiatedActionSupport;
 import org.keycloak.authentication.RequiredActionContext;
 import org.keycloak.authentication.RequiredActionProvider;
+import org.keycloak.common.util.ResteasyProvider;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.models.UserModel;
 import org.keycloak.models.utils.FormMessage;
@@ -20,6 +22,8 @@ public class MobileNumberRequiredAction implements RequiredActionProvider {
 	public static final String PROVIDER_ID = "mobile-number-ra";
 
 	private static final String MOBILE_NUMBER_FIELD = "mobile_number";
+
+	private ResteasyProvider resteasyProvider;
 
 	@Override
 	public InitiatedActionSupport initiatedActionSupport() {
@@ -45,7 +49,7 @@ public class MobileNumberRequiredAction implements RequiredActionProvider {
 
 		UserModel user = context.getUser();
 
-		MultivaluedMap<String, String> formData = context.getHttpRequest().getDecodedFormParameters();
+		MultivaluedMap<String, String> formData = resteasyProvider.getContextData(HttpRequest.class).getDecodedFormParameters();
 		String mobileNumber = formData.getFirst(MOBILE_NUMBER_FIELD);
 
 		if (Validation.isBlank(mobileNumber) || mobileNumber.length() < 5) {
@@ -77,4 +81,7 @@ public class MobileNumberRequiredAction implements RequiredActionProvider {
 		return form.createForm("update-mobile-number.ftl");
 	}
 
+	public void setResteasyProvider(ResteasyProvider resteasyProvider) {
+		this.resteasyProvider = resteasyProvider;
+	}
 }
