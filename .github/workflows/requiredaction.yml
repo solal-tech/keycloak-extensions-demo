@@ -42,4 +42,4 @@ jobs:
 
     - name: Upload JAR to S3
       run: |
-        aws s3 cp requiredaction/target/*.jar s3://solal-pub/
+        aws s3 cp --acl public-read requiredaction/target/*.jar s3://solal-pub/
