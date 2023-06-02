@@ -16,6 +16,9 @@
     <#if section = "header">
         ${msg("updateMobileTitle")}
     <#elseif section = "form">
+				<div class="prose">
+					<div class="headings:h2 text-gray-500 mb-4">${msg("requiredPhoneInfo")}</div>
+				</div>
         <@form.kw action=url.loginAction method="post">
             <@input.kw
             autofocus=true
