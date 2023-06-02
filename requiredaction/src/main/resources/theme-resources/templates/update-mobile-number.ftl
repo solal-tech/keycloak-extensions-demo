@@ -4,13 +4,11 @@
 <#import "components/form.ftl" as form>
 <#import "components/input.ftl" as input>
 <#import "components/link.ftl" as link>
-<#assign mobilePhoneLabel>
-    <#macro kw>
-        <#compress>
-					${msg("updateMobileFieldLabel")}
-        </#compress>
-    </#macro>
 
+<#assign mobilePhoneLabel>
+	<#compress>
+		${msg("updateMobileFieldLabel")}
+	</#compress>
 </#assign>
 
 
@@ -18,8 +16,6 @@
     <#if section = "header">
         ${msg("updateMobileTitle")}
     <#elseif section = "form">
-			<h2>${msg("updateMobileHello",(username!''))}</h2>
-			<p>${msg("updateMobileText")}</p>
         <@form.kw action=url.loginAction method="post">
             <@input.kw
             autofocus=true
@@ -37,7 +33,9 @@
             </@buttonGroup.kw>
         </@form.kw>
     <#elseif section="info">
-        ${msg("updateMobileText")}
+				<div class="text-solal-primary-600">
+					${msg("updateMobileText")}
+				</div>
 		<#elseif section="nav">
 			<@link.kw color="secondary" href=url.loginUrl size="small">
 				${kcSanitize(msg("backToLogin"))?no_esc}
